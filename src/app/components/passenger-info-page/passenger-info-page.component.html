@@ -1,0 +1,99 @@
+<section class="page-card passenger-shell">
+  <div class="passenger-grid">
+    <div>
+      <h2>მგზავრების მონაცემები</h2>
+
+      <form (ngSubmit)="submit()" class="passenger-form">
+        <fieldset>
+          <legend>კონტაქტი</legend>
+          <label>
+            ელ.ფოსტა
+            <input type="email" [(ngModel)]="bookingService.passengerInfo.email" name="email" required />
+          </label>
+          <label>
+            ტელეფონი
+            <input type="tel" [(ngModel)]="bookingService.passengerInfo.phone" name="phone" required />
+          </label>
+          <label>
+            მგზავრების რაოდენობა
+            <input
+              type="number"
+              min="1"
+              max="6"
+              [(ngModel)]="bookingService.search.passengerCount"
+              (ngModelChange)="updateCount($event)"
+              name="passengerCount"
+            />
+          </label>
+        </fieldset>
+
+        <fieldset class="passengers-list">
+          <legend>მგზავრები</legend>
+          <div class="passenger-card" *ngFor="let passenger of bookingService.passengerDetails; let idx = index">
+            <div class="passenger-row">
+              <label>
+                გვარი
+                <input type="text" [(ngModel)]="passenger.lastName" name="lastName-{{ idx }}" required />
+              </label>
+              <label>
+                სახელი
+                <input type="text" [(ngModel)]="passenger.firstName" name="firstName-{{ idx }}" required />
+              </label>
+            </div>
+            <label>
+              პირადი ნომერი
+              <input type="text" [(ngModel)]="passenger.personalId" name="personalId-{{ idx }}" required />
+            </label>
+            <div class="seat-choice">
+              <span>ადგილი: {{ passenger.coach || '-' }} {{ passenger.seat || '' }}</span>
+              <button type="button" class="secondary-button" (click)="openSeatModal(idx)">ადგილის არჩევა</button>
+            </div>
+          </div>
+        </fieldset>
+
+        <button type="submit" class="primary-button" [disabled]="!canRegister">ბილეთის რეგისტრაცია</button>
+      </form>
+    </div>
+
+    <aside class="invoice-card">
+      <h3>ინვოისი</h3>
+      <div class="invoice-row">
+        <span>რეისი</span>
+        <strong>{{ bookingService.selectedRoute?.trainNumber }}</strong>
+      </div>
+      <div class="invoice-row">
+        <span>მარშრუტი</span>
+        <strong>{{ bookingService.selectedRoute?.origin }} → {{ bookingService.selectedRoute?.destination }}</strong>
+      </div>
+      <div class="invoice-row">
+        <span>თარიღი</span>
+        <strong>{{ bookingService.search.date }}</strong>
+      </div>
+      <div class="invoice-row">
+        <span>გადასახდელი</span>
+        <strong>{{ bookingService.totalAmount }} ₾</strong>
+      </div>
+      <p class="invoice-note">მას შემდეგ, რაც შეავსებთ მთელ ინფორმაციას, დააჭირეთ "ბილეთის რეგისტრაცია".</p>
+    </aside>
+  </div>
+
+  <div class="modal-backdrop" *ngIf="seatModalOpen" (click)="closeSeatModal()"></div>
+  <div class="modal" *ngIf="seatModalOpen">
+    <div class="modal-content">
+      <h3>ადგილის არჩევა</h3>
+      <p>მგზავრი {{ activePassengerIndex + 1 }}</p>
+      <div class="seat-grid">
+        <button
+          *ngFor="let seat of bookingService.availableSeats"
+          type="button"
+          [disabled]="!seat.available && !(bookingService.passengerDetails[activePassengerIndex]?.seatId === seat.seatId)"
+          [class.selected]="bookingService.passengerDetails[activePassengerIndex]?.seatId === seat.seatId"
+          [class.unavailable]="!seat.available && !(bookingService.passengerDetails[activePassengerIndex]?.seatId === seat.seatId)"
+          (click)="chooseSeat(seat)">
+          {{ seat.coach }}-{{ seat.seat }} {{ seat.price ? '(' + seat.price + ' ₾)' : '' }}
+        </button>
+      </div>
+      <button type="button" class="close-button" (click)="closeSeatModal()">დახურვა</button>
+    </div>
+  </div>
+</section>

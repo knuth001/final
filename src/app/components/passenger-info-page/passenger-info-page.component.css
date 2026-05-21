@@ -1,0 +1,199 @@
+.page-card {
+  margin: 0 auto;
+  padding: 2rem;
+  border-radius: 18px;
+  background: #fff;
+  box-shadow: 0 18px 50px rgba(52, 56, 93, 0.08);
+}
+
+.page-card h2 {
+  margin-bottom: 1.5rem;
+  font-size: 1.9rem;
+}
+
+.passenger-shell {
+  display: grid;
+  gap: 2rem;
+}
+
+.passenger-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 320px;
+  gap: 2rem;
+}
+
+.passenger-form {
+  display: grid;
+  gap: 1.25rem;
+}
+
+.passenger-form fieldset {
+  border: 1px solid #e5e9f2;
+  border-radius: 16px;
+  padding: 1.35rem;
+  background: #f9fbff;
+}
+
+.passenger-form legend {
+  font-weight: 700;
+  margin-bottom: 1rem;
+}
+
+.passenger-form label {
+  display: grid;
+  gap: 0.5rem;
+  font-weight: 600;
+}
+
+.passenger-form input {
+  width: 100%;
+  padding: 0.95rem 1rem;
+  border: 1px solid #dfe3ec;
+  border-radius: 12px;
+  font-size: 1rem;
+}
+
+.passenger-row {
+  display: grid;
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+
+.passenger-row label {
+  width: 100%;
+}
+
+.passenger-card {
+  border: 1px solid #e5e9f2;
+  border-radius: 16px;
+  padding: 1rem;
+  margin-bottom: 1rem;
+  background: #fff;
+}
+
+.seat-choice {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1rem;
+  margin-top: 0.75rem;
+}
+
+.invoice-card {
+  border: 1px solid #e5e9f2;
+  border-radius: 18px;
+  padding: 1.5rem;
+  background: #f8fbff;
+}
+
+.invoice-card h3 {
+  margin: 0 0 1rem;
+}
+
+.invoice-row {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-bottom: 0.9rem;
+}
+
+.invoice-note {
+  margin-top: 1rem;
+  color: #62718a;
+  font-size: 0.95rem;
+}
+
+.primary-button,
+.secondary-button,
+.close-button {
+  padding: 0.95rem 1.5rem;
+  border-radius: 999px;
+  border: none;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.primary-button {
+  background: #3045f5;
+  color: #fff;
+}
+
+.primary-button:hover {
+  background: #2236c9;
+}
+
+.secondary-button {
+  background: #eef3ff;
+  color: #3045f5;
+}
+
+.secondary-button:hover {
+  background: #dbe3ff;
+}
+
+.modal-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.35);
+  z-index: 10;
+}
+
+.modal {
+  position: fixed;
+  inset: 0;
+  z-index: 20;
+  display: grid;
+  place-items: center;
+  padding: 1rem;
+}
+
+.modal-content {
+  width: min(100%, 560px);
+  padding: 1.5rem;
+  border-radius: 20px;
+  background: #fff;
+  box-shadow: 0 28px 80px rgba(19, 55, 122, 0.16);
+}
+
+.modal-content h3 {
+  margin-top: 0;
+}
+
+.seat-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+  gap: 0.75rem;
+  margin: 1rem 0;
+}
+
+.seat-grid button {
+  border: 1px solid #dfe3ec;
+  border-radius: 14px;
+  padding: 0.85rem;
+  background: #fff;
+  cursor: pointer;
+}
+
+.seat-grid button.selected {
+  background: #3045f5;
+  color: #fff;
+  border-color: #3045f5;
+}
+
+.seat-grid button.unavailable {
+  background: #ffe6e8;
+  color: #aa2738;
+  cursor: not-allowed;
+}
+
+.close-button {
+  margin-top: 1rem;
+  background: #f3f4ff;
+  color: #23307c;
+}
+
+@media (max-width: 900px) {
+  .passenger-grid {
+    grid-template-columns: 1fr;
+  }
+}

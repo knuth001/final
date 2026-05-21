@@ -1,0 +1,46 @@
+<section class="page-card">
+  <h2>ბილეთის გამოკვლევა და გაუქმება</h2>
+
+  <form class="status-form" (ngSubmit)="searchTicket()">
+    <label>
+      ბილეთის კოდი
+      <input type="text" [(ngModel)]="ticketCode" name="ticketCode" />
+    </label>
+    <button type="submit" class="primary-button" [disabled]="loading">ძიება</button>
+  </form>
+
+  <p *ngIf="ticketError" class="error-text">ბილეთი ვერ მოიძებნა. გთხოვთ, შეამოწმოთ კოდი.</p>
+
+  <div *ngIf="ticketFound && currentTicket" class="ticket-card">
+    <div class="ticket-row">
+      <span>ბილეთის ID</span>
+      <strong>{{ currentTicket.id }}</strong>
+    </div>
+    <div class="ticket-row">
+      <span>რეისი</span>
+      <strong>{{ currentTicket.train?.number || currentTicket.train?.name || currentTicket.train?.id }} ({{ currentTicket.train?.from || '' }} → {{ currentTicket.train?.to || '' }})</strong>
+    </div>
+    <div class="ticket-row">
+      <span>თარიღი</span>
+      <strong>{{ currentTicket.date }}</strong>
+    </div>
+    <div class="ticket-row">
+      <span>გადასახდელი</span>
+      <strong>{{ currentTicket.ticketPrice ?? '---' }} ₾</strong>
+    </div>
+    <div class="passenger-list">
+      <div *ngFor="let passenger of currentTicket.persons || []; let idx = index" class="passenger-item">
+        <span>#{{ idx + 1 }}</span>
+        <strong>{{ passenger.surname }} {{ passenger.name }}</strong>
+        <span>{{ passenger.seat?.number || passenger.seat?.seatId }}</span>
+      </div>
+    </div>
+    <div class="ticket-row">
+      <span>სტატუსი</span>
+      <strong [class.cancelled]="!currentTicket.confirmed">{{ currentTicket.confirmed ? 'confirmed' : 'cancelled' }}</strong>
+    </div>
+    <button type="button" class="secondary-button" (click)="cancel()" [disabled]="loading || !currentTicket.confirmed">
+      გაუქმება
+    </button>
+  </div>
+</section>

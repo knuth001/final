@@ -1,0 +1,31 @@
+<section class="page-card">
+  <div class="page-header">
+    <div>
+      <h2>მატარებლის რეისები</h2>
+      <p>თარიღი: {{ bookingService.search.date }}</p>
+    </div>
+  </div>
+
+  <div *ngIf="routes.length; else emptySearch">
+    <div class="route-card" *ngFor="let item of routes">
+      <div class="route-header">
+        <div>
+          <strong>{{ item.route.trainNumber }}</strong>
+          <p>{{ item.route.origin }} → {{ item.route.destination }}</p>
+        </div>
+        <span>{{ item.route.seats.length ? item.route.seats[0].price + ' ₾' : 'ფასი' }}</span>
+      </div>
+      <div class="route-meta">
+        <span>გამგზავრება: {{ item.route.departure }}</span>
+        <span>მოსვლა: {{ item.route.arrival }}</span>
+      </div>
+      <button type="button" class="primary-button" (click)="bookRoute(item)" [disabled]="loading">
+        დაჯავშნა
+      </button>
+    </div>
+  </div>
+
+  <ng-template #emptySearch>
+    <p class="empty-state">გთხოვთ, საწყისი გვერდი ჩაანაცვლოთ რეისზე ძებნით.</p>
+  </ng-template>
+</section>

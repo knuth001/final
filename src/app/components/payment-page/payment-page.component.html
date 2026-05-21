@@ -1,0 +1,53 @@
+<section class="page-card">
+  <h2>გადახდა</h2>
+
+  <div *ngIf="bookingService.selectedRoute; else missingRoute">
+    <div class="summary-box">
+      <div>
+        <p><strong>რეისი:</strong> {{ bookingService.selectedRoute.trainNumber }}</p>
+        <p><strong>მარშრუტი:</strong> {{ bookingService.selectedRoute.origin }} → {{ bookingService.selectedRoute.destination }}</p>
+        <p><strong>თარიღი:</strong> {{ bookingService.search.date }}</p>
+
+        <p><strong>მგზავრები:</strong> {{ bookingService.search.passengerCount }}</p>
+      </div>
+      <div class="price-tag">
+        <span>სულ</span>
+        <strong>{{ totalPrice }} ₾</strong>
+      </div>
+    </div>
+
+    <form class="payment-form" (ngSubmit)="pay()">
+      <label>
+        ბარათის ნომერი
+        <input type="text" [(ngModel)]="cardNumber" name="cardNumber" placeholder="0000 0000 0000 0000" />
+      </label>
+      <label>
+        სახელი ბარათზე
+        <input type="text" [(ngModel)]="cardName" name="cardName" />
+      </label>
+      <div class="split-inputs">
+        <label>
+          ვადა
+          <input type="text" [(ngModel)]="expiration" name="expiration" placeholder="MM/YY" />
+        </label>
+        <label>
+          CVC
+          <input type="text" [(ngModel)]="cvc" name="cvc" placeholder="123" />
+        </label>
+      </div>
+      <button type="submit" class="primary-button" [disabled]="processing">გადახდა</button>
+    </form>
+
+    <p *ngIf="paymentError" class="error-text">გადახდა ვერ განხორციელდა. სცადეთ მოგვიანებით.</p>
+
+    <div *ngIf="paymentConfirmed" class="confirmation-card">
+      <p>გადახდა წარმატებით განხორციელდა.</p>
+      <button type="button" class="secondary-button" (click)="downloadPdf()">PDF-ის გადმოწერა</button>
+      <button type="button" class="secondary-button" (click)="goToStatus()">ბილეთის სტატუსი</button>
+    </div>
+  </div>
+
+  <ng-template #missingRoute>
+    <p class="empty-state">გთხოვთ, აირჩიეთ რეისი და ადგილი საწყის გვერდზე.</p>
+  </ng-template>
+</section>
